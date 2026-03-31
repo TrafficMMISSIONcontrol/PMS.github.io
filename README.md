@@ -6,54 +6,55 @@
 [![Data Source](https://img.shields.io/badge/Data-GOV.pl%20%7C%20GDDKiA-orange?style=flat-square)](https://dane.gov.pl)
 [![License](https://img.shields.io/badge/License-MIT-red?style=flat-square)](LICENSE)
 
-**PMS (Poland Mission System)** to nowoczesny, otwartoźródłowy dashboard typu *Mission Control* do monitorowania polskiej infrastruktury drogowej w czasie rzeczywistym. System agreguje dane z systemów rządowych, infrastruktury krytycznej oraz mediów, dostarczając pełny obraz sytuacji na drogach w jednym, responsywnym interfejsie.
+**PMS (Poland Mission System)** is a modern, open-source *Mission Control* dashboard for real-time monitoring of Polish road infrastructure. The system aggregates data from government APIs, critical infrastructure sensors, and traffic news to provide a comprehensive situational overview in a responsive interface.
 
 ---
 
-## 🛠️ Stack Technologiczny
+## 🛠️ Tech Stack
 
 * **Frontend:** HTML5 / Modern CSS (Dark Mode Optimization)
-* **Engine Mapy:** [Leaflet.js](https://leafletjs.com/) – lekka i wydajna biblioteka do interaktywnych map.
-* **Data Fetching:** Native JavaScript (Fetch API) – brak ciężkich zależności i frameworków.
-* **API:** Overpass API (OpenStreetMap) oraz publiczne dane GDDKiA.
+* **Map Engine:** [Leaflet.js](https://leafletjs.com/) – Lightweight, high-performance interactive mapping.
+* **Data Fetching:** Native JavaScript (Fetch API) – Zero backend dependencies.
+* **Geospatial Data:** Overpass API (OpenStreetMap) and GDDKiA public endpoints.
 
 ---
 
-## 🚀 Kluczowe Funkcje
+## 🚀 Key Features
 
-* **📍 Inteligentna Mapa (Leaflet):** Interaktywna wizualizacja zdarzeń drogowych (wypadki, blokady, roboty drogowe) z precyzyjną lokalizacją.
-* **🚨 Safety Intelligence:** Baza fotoradarów oraz odcinkowych pomiarów prędkości pobierana bezpośrednio przez Overpass API.
-* **📰 News Feed:** Agregator wiadomości drogowych (RSS) z inteligentnym sortowaniem według województw i numerów dróg (A1, S8, DK94 itp.).
-* **⚡ Zero-Server Architecture:** Projekt w pełni statyczny, zoptymalizowany pod darmowy i szybki hosting GitHub Pages.
-* **📱 Tactical UI:** Interfejs typu "Mission Control" w trybie Dark Mode, dostosowany do pracy w trasie na urządzeniach mobilnych.
-
----
-
-## 📊 Ekosystem Danych
-
-Projekt bazuje na transparentności i wykorzystuje publicznie dostępne dane:
-* **[Dane.gov.pl](https://dane.gov.pl)** – API utrudnień drogowych i zdarzeń GDDKiA.
-* **[OpenStreetMap](https://www.openstreetmap.org/)** – Infrastruktura drogowa i punkty kontroli przez Overpass API.
-* **[Leaflet](https://leafletjs.com/)** – Renderowanie warstw mapy i interakcja z użytkownikiem.
+* **📍 Tactical Map (`mapa/index.html`):** Interactive Leaflet-based visualization of traffic events (accidents, roadblocks, construction) with precise GPS localization.
+* **🚨 Safety Intelligence:** Real-time synchronization of speed cameras and average speed check zones via Overpass API.
+* **📰 Smart News Feed (`news.html`):** Traffic news aggregator with automatic categorization by voivodeships and road numbers (A1, S8, DK94, etc.).
+* **⚡ Zero-Server Architecture:** Fully static project optimized for GitHub Pages, ensuring high availability and low latency.
+* **📱 Mission Control UI:** Professional Dark Mode interface designed for high legibility in low-light environments and mobile use.
 
 ---
 
-## 🏗️ Jak zacząć?
+## 📊 Data Ecosystem
 
-Strona jest dostępna pod adresem:  
+The project relies on transparent, public data sources:
+* **[Dane.gov.pl](https://dane.gov.pl)** – GDDKiA traffic disruptions and events API.
+* **[OpenStreetMap](https://www.openstreetmap.org/)** – Road infrastructure and traffic enforcement points via Overpass API.
+* **[Google News RSS]** – Localized regional traffic updates.
+
+---
+
+## 🏗️ Quick Start
+
+The system is live at:  
 👉 **[https://PMS.github.io/](https://PMS.github.io/)**
 
-Jeśli chcesz rozwijać projekt lokalnie:
+To develop or run the project locally:
 
-1.  **Sklonuj repozytorium:**
+1.  **Clone the repository:**
     ```bash
     git clone [https://github.com/TrafficMMISSIONcontrol/PMS.github.io.git](https://github.com/TrafficMMISSIONcontrol/PMS.github.io.git)
     ```
-2.  **Uruchomienie:**
-    Otwórz plik `index.html` bezpośrednio w przeglądarce.
+2.  **Access the Modules:**
+    * For the **Traffic Map**, open: `/mapa/index.html`
+    * For the **News Aggregator**, open: `/news.html`
 
 ---
 
-## 🛡️ Licencja
+## 🛡️ License
 
-Projekt udostępniany na licencji **MIT**. Możesz go dowolnie modyfikować i rozwijać.
+Distributed under the **MIT License**. Feel free to fork, modify, and contribute to improving road safety in Poland.
