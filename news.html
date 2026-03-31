@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Hub — Poland Mission Control</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="news.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+    <div id="news-app">
+        <!-- Main Header -->
+        <header>
+            <div class="logo-area">
+                <div class="icon-pulse news-icon">
+                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M35 20C24 20 15 29 15 40C15 55 35 80 35 80C35 80 55 55 55 40C55 29 46 20 35 20ZM35 50C29.5 50 25 45.5 25 40C25 34.5 29.5 30 35 30C40.5 30 45 34.5 45 40C45 45.5 40.5 50 35 50Z" fill="url(#logoGrad)"/>
+                        <path d="M55 40Q65 20 75 40Q85 60 95 40" stroke="url(#logoGrad)" stroke-width="10" stroke-linecap="round" fill="none"/>
+                        <path d="M72 45L80 35L78 50L85 40" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1>NEWS HUB <span style="color: var(--accent-blue); font-size: 0.7rem; vertical-align: super;">v1.2</span></h1>
+            </div>
+            
+            <div class="header-tools">
+                <div id="new-messages-alert">Nowe wiadomości: <span id="news-counter">0</span></div>
+                <a href="MAPA/index.html" class="nav-btn map-link">
+                    <span class="icon">🗺️</span> POWRÓT DO MAPY
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <!-- Sidebar Panel -->
+            <aside>
+                <section class="control-panel">
+                    <h3>Sortowanie</h3>
+                    <select id="sort-order" class="filter-select">
+                        <option value="newest">Najnowsze od góry</option>
+                        <option value="oldest">Najstarsze od góry</option>
+                    </select>
+                </section>
+
+                <section class="control-panel">
+                    <h3>Filtrowanie</h3>
+                    <select id="province-filter" class="filter-select">
+                        <option value="all">Wszystkie województwa</option>
+                        <option value="mazowieckie">Mazowieckie</option>
+                        <option value="slaskie">Śląskie</option>
+                        <option value="malopolskie">Małopolskie</option>
+                        <option value="dolnoslaskie">Dolnośląskie</option>
+                        <option value="wielkopolskie">Wielkopolskie</option>
+                        <option value="pomorskie">Pomorskie</option>
+                        <option value="lodzkie">Łódzkie</option>
+                        <option value="zachodniopomorskie">Zachodniopomorskie</option>
+                        <option value="lubelskie">Lubelskie</option>
+                        <option value="podkarpackie">Podkarpackie</option>
+                        <option value="kujawsko-pomorskie">Kujawsko-Pomorskie</option>
+                        <option value="podlaskie">Podlaskie</option>
+                        <option value="lubuskie">Lubuskie</option>
+                        <option value="opolskie">Opolskie</option>
+                        <option value="swietokrzyskie">Świętokrzyskie</option>
+                        <option value="warminsko-mazurskie">Warmińsko-Mazurskie</option>
+                        <option value="inne">Inne / Ogólnopolskie</option>
+                    </select>
+                </section>
+
+                <section class="control-panel">
+                    <h3>Synchronizacja</h3>
+                    <button class="refresh-btn" id="refresh-news">
+                        🔄 ODŚWIEŻ NEWSY
+                    </button>
+                    
+                    <div class="status-info">
+                        <p id="last-update">Ostatnia aktualizacja: --:--</p>
+                        <p id="sync-status">Status: Oczekiwanie...</p>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- News Feed Area -->
+            <div class="dashboard-grid">
+                <!-- Column 1: Live News (RSS) -->
+                <div class="dashboard-col">
+                    <div class="col-header">
+                        <span class="icon">📡</span> WIADOMOŚCI (SOCIAL DATA)
+                    </div>
+                    <div id="news-container">
+                        <div style="text-align: center; padding: 50px; color: var(--text-muted);">
+                            <p>🛰️ Łączenie z satelitą informacyjnym...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 2: System Monitor (Incidents) -->
+                <div class="dashboard-col">
+                    <div class="col-header">
+                        <span class="icon">⚡</span> SYSTEM MONITOR (GODDIK/OSM)
+                    </div>
+                    <div id="incidents-container">
+                        <div style="text-align: center; padding: 50px; color: var(--text-muted);">
+                            <p>⏳ Odczytywanie danych systemowych...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <p><strong>POLAND MISSION CONTROL v1.2</strong> — PROJEKT OPEN-SOURCE</p>
+                    <p style="font-size: 0.7rem; margin-top: 5px;">System monitorowania infrastruktury drogowej w czasie rzeczywistym.</p>
+                </div>
+                <div class="footer-section">
+                    <p>ŹRÓDŁA DANYCH: GDDKiA, GOV.PL, OSM, RSS GOOGLE NEWS</p>
+                    <p style="font-size: 0.7rem; margin-top: 5px;">Informacje mają charakter poglądowy. Projekt jest całkowicie darmowy i niekomercyjny.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="MAPA/data/incidents.js"></script>
+    <script src="news.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poland Mission Control — Monitorowanie Dróg</title>
+  
+  <!-- Leaflet & Plusy -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  
+  <!-- MarkerCluster -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+</head>
+<body>
+
+  <div id="app">
+    <!-- Main Header -->
+    <header id="header">
+      <div class="logo-area">
+        <div class="icon-pulse">
+            <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="logoGradMap" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path d="M35 20C24 20 15 29 15 40C15 55 35 80 35 80C35 80 55 55 55 40C55 29 46 20 35 20ZM35 50C29.5 50 25 45.5 25 40C25 34.5 29.5 30 35 30C40.5 30 45 34.5 45 40C45 45.5 40.5 50 35 50Z" fill="url(#logoGradMap)"/>
+                <path d="M55 40Q65 20 75 40Q85 60 95 40" stroke="url(#logoGradMap)" stroke-width="10" stroke-linecap="round" fill="none"/>
+                <path d="M72 45L80 35L78 50L85 40" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1>POLAND MISSION CONTROL <span class="version">v2.3</span></h1>
+      </div>
+      <div class="header-tools">
+        <div class="status-badge">
+          <span class="pulse-dot"></span> LIVE DATA: MOCK + OVERPASS
+        </div>
+        <div class="timer" id="update-timer">30s</div>
+        <div class="clock" id="main-clock">--:--:--</div>
+        <a href="../news.html" class="nav-btn news-link">
+          <span class="icon">📰</span> NEWSY
+        </a>
+      </div>
+    </header>
+
+    <main id="container">
+      <!-- Sidebar Panel -->
+      <aside id="sidebar">
+        <div class="sidebar-content">
+          <section class="control-group">
+            <h3>Warstwy Danych</h3>
+            <div class="filter-item">
+              <label class="switch">
+                <input type="checkbox" id="toggle-accidents" checked>
+                <span class="slider"></span>
+                <span class="label-text">Wypadki i Awarie</span>
+              </label>
+              <div class="count" id="count-accidents">0</div>
+            </div>
+            <div class="filter-item">
+              <label class="switch">
+                <input type="checkbox" id="toggle-cameras" checked>
+                <span class="slider red"></span>
+                <span class="label-text">Fotoradary i OPP</span>
+              </label>
+              <div class="count" id="count-cameras">...</div>
+            </div>
+            <div class="filter-item">
+              <label class="switch">
+                <input type="checkbox" id="toggle-works" checked>
+                <span class="slider orange"></span>
+                <span class="label-text">Roboty drogowe</span>
+              </label>
+              <div class="count" id="count-works">0</div>
+            </div>
+          </section>
+
+          <section class="control-group">
+            <h3>Nawigacja i Ruch</h3>
+            <button class="action-btn" id="toggle-traffic">
+              <span class="icon">📊</span> PRZEŁĄCZ WARSTWĘ RUCHU
+            </button>
+            
+            <div class="stat-grid">
+              <div class="stat-item">
+                <span class="label">Ruch Miejski</span>
+                <span class="value" id="status-traffic">WŁĄCZONY</span>
+              </div>
+              <div class="stat-item">
+                <span class="label">Odświeżany</span>
+                <span class="value">Co 30s</span>
+              </div>
+            </div>
+            <button class="refresh-btn" id="refresh-traffic">
+              🔄 WYMUŚ PRZELICZENIE RUCHU
+            </button>
+            
+            <div class="filter-item" style="margin-top: 10px;">
+              <label class="switch">
+                <input type="checkbox" id="toggle-as-roads" checked>
+                <span class="slider"></span>
+                <span class="label-text">Autostrady (A/S)</span>
+              </label>
+            </div>
+            
+            <div class="filter-item">
+              <label class="switch">
+                <input type="checkbox" id="toggle-dk-roads" checked>
+                <span class="slider green"></span>
+                <span class="label-text">Drogi krajowe (DK)</span>
+              </label>
+            </div>
+
+            <div class="filter-item">
+              <label class="switch">
+                <input type="checkbox" id="toggle-city-roads" checked>
+                <span class="slider orange"></span>
+                <span class="label-text">Ruch Miejski (Warszawa, itd.)</span>
+              </label>
+            </div>
+          </section>
+
+          <section class="legend">
+            <h3>Legenda</h3>
+            <div class="legend-row"><span class="dot red-pulse"></span> Wypadek / Blokada</div>
+            <div class="legend-row"><span class="dot orange"></span> Roboty drogowe</div>
+            <div class="legend-row"><span class="cam-icon">📸</span> Fotoradar stacjonarny</div>
+            <div class="legend-divider">Natężenie ruchu:</div>
+            <div class="legend-row traffic-grad">
+              <span class="bar green"></span>
+              <span class="bar yellow"></span>
+              <span class="bar red"></span>
+            </div>
+          </section>
+        </div>
+        
+        <footer class="sidebar-footer">
+          <p><strong>POLAND MISSION CONTROL v2.3</strong></p>
+          <p style="font-size: 0.65rem; color: var(--text-muted); line-height: 1.4;">
+            DANE: GDDKiA, GOV.PL, OSM, OVERPASS.<br>
+            PROJEKT DARMOWY I NIEKOMERCYJNY.
+          </p>
+          <div id="last-sync" style="margin-top: 5px;">Ostatnia synchronizacja: --:--</div>
+        </footer>
+      </aside>
+
+      <!-- Map Area -->
+      <div id="map-wrap">
+        <div id="map"></div>
+        <div id="search-container"></div> <!-- Geocoder target -->
+        
+        <div id="toast-notif">✅ Dane Overpass zsynchronizowane</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="data/cameras.js?v=2.9.1"></script>
+  <script src="data/incidents.js?v=2.9.1"></script>
+  <script src="app.js?v=2.9.1"></script>
+</body>
+</html>
