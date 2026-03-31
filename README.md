@@ -31,7 +31,7 @@ Projekt jest transparentny i bazuje na publicznie dostępnych danych:
 ## 🚀 Jak zacząć?
 
 Strona jest dostępna pod adresem:  
-👉 **[https://TrafficMMISSIONcontrol.github.io/PMS.github.io/](https://TrafficMMISSIONcontrol.github.io/PMS.github.io/)**
+👉 **[https://PMS.github.io/](https://PMS.github.io/)**
 
 Jeśli chcesz rozwijać projekt lokalnie:
 1. Sklonuj repozytorium:
